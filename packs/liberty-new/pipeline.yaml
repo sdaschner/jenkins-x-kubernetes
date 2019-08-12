@@ -35,18 +35,16 @@ pipelines:
 
       - name: promote
         steps:
-        - dir: charts/jenkins-x-quickstart-liberty
-          steps:
-          - sh: jx step changelog --version v\$(cat ../../VERSION)
-            name: changelog
-#          - comment: release the helm chart
-          - sh: jx step helm release
-            name: helm-release
-#          - comment: promote through all 'Auto' promotion Environments
-          - sh: jx promote -b --all-auto --timeout 1h --version \$(cat ../../VERSION)
-            name: jx-promote
-          - sh: echo waiting for promotion to be fully rolled-out
-            name: wait-deployment
+        - sh: jx step changelog --version v\$(cat ../../VERSION)
+          name: changelog
+          dir: charts/jenkins-x-quickstart-liberty
+        - sh: jx step helm release
+          name: helm-release
+          dir: charts/jenkins-x-quickstart-liberty
+        - sh: jx promote -b --all-auto --timeout 1h --version \$(cat ../../VERSION)
+          name: jx-promote
+        - sh: echo waiting for promotion to be fully rolled-out
+          name: wait-deployment
         agent:
           container: maven-java11
           label: jenkins-maven
