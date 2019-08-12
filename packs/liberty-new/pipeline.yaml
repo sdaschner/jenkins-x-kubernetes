@@ -2,12 +2,12 @@ pipelines:
   release:
     pipeline:
       stages:
-      - name: setup
-        steps:
-        - groovy: git 'https://github.com/sdaschner/jenkins-x-quickstart-liberty.git'
-        agent:
-          container: maven-java11
-          label: jenkins-maven
+#      - name: setup
+#        steps:
+#        - groovy: git 'https://github.com/sdaschner/jenkins-x-quickstart-liberty.git'
+#        agent:
+#          container: maven-java11
+#          label: jenkins-maven
 
       - name: build
         steps:
