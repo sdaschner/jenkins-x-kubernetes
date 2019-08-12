@@ -50,3 +50,4 @@ pipelines:
 
 agent:
   container: maven-java11
+  label: jenkins-maven
