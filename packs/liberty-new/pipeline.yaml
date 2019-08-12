@@ -47,4 +47,3 @@ pipelines:
           name: mvn-liberty-integration-test
       agent:
         image: maven-java11
-        label: jenkins-maven
