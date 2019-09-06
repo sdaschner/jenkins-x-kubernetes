@@ -37,6 +37,7 @@ pipelines:
           dir: charts/jenkins-x-quickstart-liberty
         - sh: jx promote -b --all-auto --timeout 1h --version $(cat ../../VERSION)
           name: jx-promote
+          dir: charts/jenkins-x-quickstart-liberty
         - sh: echo waiting for promotion to be fully rolled-out
           name: wait-deployment
 
