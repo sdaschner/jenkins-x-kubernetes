@@ -10,6 +10,7 @@ dbImage:
   dbRepository: draft
   dbTag: dev
   pullPolicy: IfNotPresent
+foobar: foo
 
 # define environment variables here as a map of key: value
 env:

@@ -18,6 +18,7 @@ spec:
         sdDbImageTag: {{ default "N/A" .Values.dbImage.dbTag }}
         sdDbImageRep: {{ default "N/A" .Values.dbImage.dbRepository }}
         sdDbImagePolicy: {{ default "N/A" .Values.dbImage.pullPolicy }}
+        foobar: {{ .Values.foobar }}
 {{- if .Values.podAnnotations }}
 {{ toYaml .Values.podAnnotations | indent 8 }}
 {{- end }}

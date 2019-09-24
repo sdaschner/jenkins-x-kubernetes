@@ -45,6 +45,7 @@ ifeq ($(OS),Linux)
 	sed -i -e "s/tag:.*/tag: $(RELEASE_VERSION)/" values.yaml
 	sed -i -e "s|dbRepository:.*|dbRepository: $(DOCKER_REGISTRY)\/REPLACE_ME_DOCKER_REGISTRY_ORG\/REPLACE_ME_APP_NAME-db-migration|" values.yaml
 	sed -i -e "s/dbTag:.*/dbTag: $(DB_VERSION)/" values.yaml
+	sed -i -e "s/foobar:.*/foobar: bar/" values.yaml
 else
 	echo "platfrom $(OS) not supported to release from"
 	exit -1
