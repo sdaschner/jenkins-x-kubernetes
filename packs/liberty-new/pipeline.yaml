@@ -7,6 +7,9 @@ pipelines:
       steps:
       - sh: mvn versions:set -DnewVersion=$PREVIEW_VERSION
         name: set-version
+      - sh: ls *.sql | sort -r | head -1 | sed -e 's/_.*//' > DB_VERSION
+        name: database-schema-version
+        dir: database/rollouts
       - sh: mvn clean install
         name: mvn-install
       #        - sh: mvn liberty:create-server liberty:install-feature liberty:install-apps liberty:start-server failsafe:integration-test liberty:stop-server failsafe:verify
@@ -16,7 +19,7 @@ pipelines:
         name: skaffold-version
       - sh: export VERSION=$PREVIEW_VERSION && skaffold build -f skaffold.yaml
         name: container-build
-  # promote:
+#    promote:
   #   include wait step, then execute system test
 #      - name: system-test
 #        steps:
@@ -25,6 +28,18 @@ pipelines:
 #          name: mvn-liberty-integration-test
 
   release:
+    setVersion:
+      replace: true
+      steps:
+      - sh: echo \$(jx-release-version) > VERSION
+        name: next-version
+      - sh: ls *.sql | sort -r | head -1 | sed -e 's/_.*//' > DB_VERSION
+        name: database-schema-version
+        dir: database/rollouts
+      - sh: mvn versions:set -DnewVersion=\$(cat VERSION)
+        name: set-version
+      - sh: jx step tag --version \$(cat VERSION)
+        name: tag-version
     build:
       replace: true
       steps:
@@ -39,7 +54,7 @@ pipelines:
         name: container-build
       - sh: jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)
         name: post-build
-  # promote:
+#    promote:
   #   include wait step, then execute system test
   #      - name: system-test
   #        steps:
